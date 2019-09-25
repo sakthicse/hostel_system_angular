@@ -1,0 +1,58 @@
+<header class="app-header navbar">
+    <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" [routerLink]="['']">
+    <img class="navbar-brand-full" src="/assets/img/logo.svg" width="150" height="39" alt="CoreUI Logo">
+    <img class="navbar-brand-minimized" src="/assets/img/logo.svg" width="30" height="30" alt="CoreUI Logo">
+    </a>
+   
+
+    <ul  *ngIf="currentAuth" class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <img class="img-avatar" src="/assets/img/user.png" alt="image">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-header text-center">
+                </div>
+                <div class="divider"></div>
+                <a class="dropdown-item btn btn-link" (click)="logout()">
+                    <i class="fa fa-lock"></i> Logout</a>
+            </div>
+        </li>
+    </ul>
+    <button *ngIf="currentAuth" class="navbar-toggler aside-menu-toggler d-lg-none" type="button"
+    data-toggle="aside-menu-show">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+</header>
+<div class="app-body" >
+    <div class="sidebar" *ngIf="currentAuth">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-item" >
+                    <a [routerLinkActive]="['active']" class="nav-link" [routerLink]="['/home']">
+                    <i class="nav-icon icon-speedometer"></i>Dashboard
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+    </div>
+    <div class="main">
+            <spinner></spinner>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<footer class="app-footer">
+    <div>
+        <a href="#">Base Template Master</a>
+        <span>&copy; 2018 Base Template ltd.</span>
+    </div>
+    <div class="ml-auto">
+        <span>Base Template ltd</span>
+        <a href="#">Base Template Master</a>
+    </div>
+</footer>

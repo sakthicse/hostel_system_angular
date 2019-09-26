@@ -21,7 +21,7 @@ export class AuthService {
     // api-token-auth/
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.cus_http.post("/api-token-auth/", data).subscribe((data) => {
+    return this.cus_http.post("/api-token-auth/", data).subscribe((data) => {
 
 
       console.log("*********************");
@@ -29,7 +29,10 @@ export class AuthService {
       var currentAuth={"access_token":data['token']}
                 //  localStorage.setItem('currentUser', JSON.stringify(data));
       localStorage.setItem('currentAuth', JSON.stringify(currentAuth));
-      this.router.navigateByUrl('/home');
+      return  JSON.stringify(currentAuth)
+     
+
+      // this.router.navigateByUrl('/home');
     }, (err)=>{
           this.router.navigateByUrl('/login');
           console.log(err);

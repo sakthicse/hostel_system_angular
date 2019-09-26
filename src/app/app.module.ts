@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataTransService } from './services/data-trans.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     NgHttpLoaderModule,
   ],
-  providers: [],
+  providers: [DataTransService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,116 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Year</li>
+    </ol>
+</nav>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>Year</h4>
+                </div>
+                <div class="col-sm-6">
+                    <div class="filter">
+                        <input type="text" name="q" class="w-40 form-control" placeholder="Search" [(ngModel)]="search_form.q">
+                        <button type="button" class="btn-info btn-sm m-1 filter-btn" (click)="search_form.q && getYear()" ><i class="fa fa-search cursor"
+                            aria-hidden="true" title="Search" ></i></button>
+                        <button type="button" class="btn-info btn-sm m-1 filter-btn" (click)="search_form.q && clearSearch()"><i class="fa fa-times cursor"
+                            aria-hidden="true" title="clear"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                    <thead class="table_th">
+                        <tr>
+                            <th class="w-65">Year</th>
+                            <th class="w-35">Current Year</th>
+                            <th class="text-center w-5"> <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                data-target="#year-form" (click)=clearInput($event)><b>+</b></button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let year of yearList">
+                            <td>{{ year.from_year }}-{{ year.to_year }}</td>
+                            <td>
+                                <ng-container *ngIf='year.current_year'> Yes</ng-container>
+                                <ng-container *ngIf='!year.current_year'> No</ng-container>
+                            </td>
+                            <td class="text-center"><span class="px-2"><i class="fa fa-edit" aria-hidden="true" data-toggle="modal" data-target="#year-form"
+                                (click)="yearEdit(year)"></i></span><i class="fa fa-trash" (click)="deleteYear(year)"></i></td>
+                        </tr>
+                        <tr *ngIf="yearList.length <= 0">
+                            <td colspan="5" class="text-center">No Data Available</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <nav>
+                <ul *ngIf="yearList.length > 0" class="pagination justify-content-center">
+                    <li><a class="page-link" [class.link_disable]="pager.currentPage == 1" (click)="pager.currentPage != 1 ? getYear(1) : false">&laquo;</a>
+                    </li>
+                    <li><a [class.link_disable]="pager.currentPage == 1" class="page-link" (click)="pager.currentPage != 1 ? getYear(currentPage-1) : false">&lsaquo;</a>
+                    </li>
+                    <li *ngFor="let page of pager.pages" class="page-item" [class.active]="currentPage == page">
+                    <a class="page-link" (click)="pager.currentPage != page ? getYear(page) : false ">{{page}}</a>
+                    </li>
+                    <li><a [class.link_disable]="currentPage == pager.totalPages" class="page-link" (click)="currentPage != pager.totalPages ? getYear(currentPage+1) : false">&rsaquo;</a>
+                    </li>
+                    <li><a [class.link_disable]="currentPage == pager.totalPages" class="page-link" (click)="currentPage != pager.totalPages ? getYear(pager.totalPages) : false">&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="year-form" style="display: none">
+    <div class="modal-dialog  modal-info">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{formName}}</h5>
+                <div><i class="fa fa-times" style="cursor: pointer;" title="Close" data-dismiss="modal"></i></div>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form (ngSubmit)="yearPost($event)" [formGroup]="yearForm">
+                    <div *ngIf="formErrors.non_field_errors"  class="alert alert-danger">Already exist</div>
+                    <div class="form-group row">
+                        <div class="col-md-4">From Year<span class="req-error"> *</span></div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control col" name="from_year" formControlName="from_year" placeholder="Ex : 2019">
+                            <div *ngIf="formErrors.from_year" class="alert alert-danger">{{formErrors.from_year}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">To Year<span class="req-error"> *</span></div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control col" name="to_year" formControlName="to_year" placeholder="Ex : 2019">
+                            <div *ngIf="formErrors.to_year" class="alert alert-danger">{{formErrors.to_year}}</div>
+                        </div>
+                    </div>
+                  
+                    <div class="row form-group">
+                        <div class="col-md-4">Current Year</div>
+                        <div class="col-sm-8">
+                            <input type="checkbox" name="current_year" formControlName="current_year">
+                            <div *ngIf="formErrors.current_year" class="alert alert-danger">{{formErrors.current_year}}</div>
+                        </div>
+                    </div>
+                   
+                 
+                    <div class="row form-group">
+                        <button class="btn p-2 btn-primary" [disabled]="!yearForm.valid">Submit</button>
+                        <button type="butto" class="btn ml-4 p-2 btn-outline-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

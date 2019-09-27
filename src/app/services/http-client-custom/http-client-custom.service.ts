@@ -33,11 +33,13 @@ export class HttpClientCustomService {
     const currentAuth = JSON.parse(localStorage.getItem('currentAuth'));
     if(currentAuth && currentAuth.access_token)
     {
-      this.headers = this.headers.set('Authorization', 'Bearer '+currentAuth.access_token);
+      this.headers = this.headers.set('Authorization', 'JWT '+currentAuth.access_token);
     }
   }
 
   get(url) {
+    console.log("=======================")
+    console.log(this.headers)
     return this.http.get(API_URL+url, {headers:this.headers});
   }
 

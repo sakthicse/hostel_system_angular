@@ -10,11 +10,13 @@ import { HttpModule } from '@angular/http';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTransService } from './services/data-trans.service';
+import { YearComponent } from './year/year.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    YearComponent
   ],
   imports: [
     BrowserModule,

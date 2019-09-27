@@ -14,9 +14,12 @@ export class AppComponent {
   title = 'crawle-angular';
   constructor(private auth:AuthService, private router: Router,public datatr:DataTransService) {
     this.currentAuth = this.auth.token();
-    this.datatr.getRecentAppConfigList().subscribe(data=>{
-      this.currentAuth = data;
-    })
+    if(!this.currentAuth){
+      this.datatr.getRecentAppConfigList().subscribe(data=>{
+        this.currentAuth = data;
+      })
+    }
+   
     if(!this.currentAuth){
       this.router.navigateByUrl('/login');
   }

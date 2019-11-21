@@ -68,8 +68,6 @@ export class YearComponent implements OnInit {
 
 
     yearPost() {
-        var datePipe = new DatePipe('en-US');
-        // this.spinner.show();
         this.cs.get('/attendance-api/check-year/?year_id=' + this.yearForm.value.id).subscribe(
             (data) => {
                 var already = data['already_exit'];
